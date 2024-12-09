@@ -9,8 +9,8 @@ class EventManager:
     def get_all_events(self) -> List[Dict]:
         """Get events from both platforms"""
         meetup_events = self.meetup_service.get_events()
-        luma_events = self.luma_service.get_events()
-        return meetup_events + luma_events
+        # luma_events = self.luma_service.get_events()
+        return meetup_events # + luma_events
     
     def rsvp_to_event(self, event_id: str, platform: str) -> bool:
         """RSVP to an event on the specified platform"""

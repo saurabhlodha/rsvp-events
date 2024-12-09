@@ -15,7 +15,7 @@ class LumaService(WebService):
     def initialize(self):
         """Initialize the Chrome WebDriver with Selenium"""
         options = webdriver.ChromeOptions()
-        options.add_argument('--headless')
+        # options.add_argument('--headless')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         
@@ -25,7 +25,7 @@ class LumaService(WebService):
     
     def login(self):
         """Login to Lu.ma"""
-        self.driver.get('https://lu.ma/auth/login')
+        self.driver.get('https://lu.ma/signin')
         
         # Wait for and fill in email
         email_field = WebDriverWait(self.driver, 10).until(

@@ -7,10 +7,11 @@ from webdriver_manager.chrome import ChromeDriverManager
 from .web_service import WebService
 
 class MeetupService(WebService):
-    def __init__(self, email: str, password: str):
+    def __init__(self, email: str, password: str, location: str):
         super().__init__()
         self.email = email
         self.password = password
+        self.location = location
         
     def initialize(self):
         """Initialize the Chrome WebDriver with Selenium"""
@@ -48,20 +49,22 @@ class MeetupService(WebService):
     
     def get_events(self):
         """Fetch events from Meetup.com"""
-        self.driver.get('https://www.meetup.com/find/?source=EVENTS')
+        print(f'https://www.meetup.com/find/?source=EVENTS&location={self.location}')
+        self.driver.get(f'https://www.meetup.com/find/?source=EVENTS&location={self.location}')
         
         events = []
         event_elements = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_all_elements_located((By.CSS_SELECTOR, '[data-event-id]'))
+            EC.presence_of_all_elements_located((By.XPATH, "//div[@data-element-name='categoryResults-eventCard']"))
         )
         
         for element in event_elements:
             event = {
-                'id': element.get_attribute('data-event-id'),
+                'id': element.get_attribute('data-eventref'),
                 'title': element.find_element(By.CSS_SELECTOR, 'h2').text,
                 'date': element.find_element(By.CSS_SELECTOR, 'time').text,
                 'platform': 'meetup'
             }
+            print(event)
             events.append(event)
             
         return events

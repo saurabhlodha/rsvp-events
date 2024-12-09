@@ -10,7 +10,8 @@ def main():
     # Initialize services
     meetup_service = MeetupService(
         email=os.getenv('MEETUP_EMAIL'),
-        password=os.getenv('MEETUP_PASSWORD')
+        password=os.getenv('MEETUP_PASSWORD'),
+        location=os.getenv('MEETUP_LOCATION')
     )
     
     luma_service = LumaService(
@@ -23,7 +24,7 @@ def main():
     try:
         # Initialize browser sessions
         meetup_service.initialize()
-        luma_service.initialize()
+        # luma_service.initialize()
         
         # Fetch all events
         events = event_manager.get_all_events()
